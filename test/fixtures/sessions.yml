@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 
+  sensor: one
+  auth_token: MyString
+  expired: false
+
+two:
+  id: 
+  sensor: two
+  auth_token: MyString
+  expired: false

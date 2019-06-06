@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  session: one
+  product: one
+  removed: false
+
+two:
+  session: two
+  product: two
+  removed: false
