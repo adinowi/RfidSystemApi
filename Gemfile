@@ -31,6 +31,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use Json Web Token (JWT) for token based authentication
 gem 'jwt'
 
+gem 'devise'
+gem 'devise-jwt'
+
+gem 'dotenv-rails', groups: [:development, :test]
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
