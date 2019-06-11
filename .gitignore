@@ -24,3 +24,5 @@
 
 # Ignore sensitive data
 /.env
+
+/vendor/bundle/*
