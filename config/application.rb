@@ -17,6 +17,18 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+if Rails.env.production?
+  config_file = '/var/www/api/config/secrets.yml'
+  if File.exists?(config_file)
+    config = YAML.load(File.read(config_file))
+    config.each do |key, value|
+      ENV[key] ||= value.to_s unless value.kind_of? Hash 
+    end 
+  else 
+    raise 'Missing required configuration file /var/www/api/config/secrets.yml'  
+  end 
+end
+
 module RfidApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

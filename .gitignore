@@ -24,5 +24,6 @@
 
 # Ignore sensitive data
 /.env
+/config/secrets.yml
 
 /vendor/bundle/*
