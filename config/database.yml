@@ -80,7 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: rfid_api_production
+  database: <%= ENV['DATABASE_PRODUCTION_NAME'] %>
   username: pguser
   password: <%= ENV['RFID_API_DATABASE_PASSWORD'] %>
-  
