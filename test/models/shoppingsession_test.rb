@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SessionTest < ActiveSupport::TestCase
+class ShoppingsessionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
