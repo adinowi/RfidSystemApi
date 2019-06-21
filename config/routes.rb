@@ -10,4 +10,5 @@ Rails.application.routes.draw do
                sessions: 'sessions',
                registrations: 'registrations'
              }
+  post '/shoppingsessions', to: 'shoppingsessions#create'
 end
