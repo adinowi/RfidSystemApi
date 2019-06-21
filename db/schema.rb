@@ -10,14 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_08_162833) do
+ActiveRecord::Schema.define(version: 2019_06_21_170611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "jwt_blacklists", force: :cascade do |t|
-    t.string "jti", null: false
-    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.boolean "deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sensors", force: :cascade do |t|
+    t.boolean "deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "sensor_id"
+    t.bigint "user_id"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sensor_id"], name: "index_sessions_on_sensor_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "shoppinglists", force: :cascade do |t|
+    t.bigint "session_id"
+    t.bigint "tag_id"
+    t.boolean "removed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_shoppinglists_on_session_id"
+    t.index ["tag_id"], name: "index_shoppinglists_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.bigint "product_id"
+    t.boolean "paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_tags_on_product_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -28,4 +65,9 @@ ActiveRecord::Schema.define(version: 2019_06_08_162833) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "sessions", "sensors"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "shoppinglists", "sessions"
+  add_foreign_key "shoppinglists", "tags"
+  add_foreign_key "tags", "products"
 end

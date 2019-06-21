@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  session: one
+  tag: one
+  removed: false
+
+two:
+  session: two
+  tag: two
+  removed: false

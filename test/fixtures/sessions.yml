@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sensor: one
+  user: one
+  active: false
+
+two:
+  sensor: two
+  user: two
+  active: false
