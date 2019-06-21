@@ -1,4 +1,4 @@
 class Shoppinglist < ApplicationRecord
-  belongs_to :session
+  belongs_to :shoppingsession
   belongs_to :tag
 end
