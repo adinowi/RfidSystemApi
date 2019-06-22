@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   post '/addproduct', to: 'shoppinglists#create'
   get '/productslist', to: 'shoppingsessions#get_list_of_products'
   get '/pay', to: 'shoppingsessions#paid'
+  delete '/removeproduct', to: 'shoppingsessions#remove'
 end

@@ -1,6 +1,6 @@
 class ShoppingsessionsController < ApplicationController
     before_action :authenticate_user!
-    before_action :active_session, only: [:get_list_of_products, :paid]
+    before_action :active_session, only: [:get_list_of_products, :paid, :remove]
     rescue_from ActionController::ParameterMissing, with: :missing_params
     
     def create
@@ -9,7 +9,7 @@ class ShoppingsessionsController < ApplicationController
     end
 
     def get_list_of_products
-        tag_ids = @shoppingsession.shoppinglists.map(&:tag_id).flatten
+        tag_ids = @shoppingsession.shoppinglists.where(removed: false).map(&:tag_id).flatten
         @products = []
         tag_ids.each do |tag_id|
             @products << Product.where(id: tag_id).first
@@ -28,6 +28,18 @@ class ShoppingsessionsController < ApplicationController
         @shoppingsession.save
         render json: {message: 'Paid'}, status: :ok
     end
+
+    def remove
+        shoppinglists = Shoppinglist.where(tag_id: params[:tag_id], shoppingsession_id: @shoppingsession.id)
+        if shoppinglists.blank?()
+             render json: {message: 'Unauthorized'}, status: :unauthorized
+        end
+        shoppinglist = shoppinglists.first
+        shoppinglist.removed = true
+        shoppinglist.save
+        render json: {message: 'Removed'}, status: :ok
+    end
+    
     
     private 
 
