@@ -11,4 +11,5 @@ Rails.application.routes.draw do
                registrations: 'registrations'
              }
   post '/shoppingsessions', to: 'shoppingsessions#create'
+  post '/addproduct', to: 'shoppinglists#create'
 end
