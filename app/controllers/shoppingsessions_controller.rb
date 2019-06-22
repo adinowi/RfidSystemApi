@@ -4,8 +4,20 @@ class ShoppingsessionsController < ApplicationController
     
     def create
         @shoppingsession = Shoppingsession.create(shoppingsession_params)
-        logger.debug @shoppingsession
         render json: {message: 'Session created' },  status: :ok
+    end
+
+    def get_list_of_products
+        @shoppingsessions = Shoppingsession.where(user_id: current_user.id, active: true)
+        if @shoppingsessions.any?()
+            shoppingsession = @shoppingsessions.order(updated_at: :desc).first
+            tag_ids = shoppingsession.shoppinglists.map(&:tag_id).flatten
+            @products = []
+            tag_ids.each do |tag_id|
+                @products << Product.where(id: tag_id).first
+            end
+            render :shoppinglists, status: :ok
+        end
     end
     
     private 

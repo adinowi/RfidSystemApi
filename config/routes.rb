@@ -12,4 +12,5 @@ Rails.application.routes.draw do
              }
   post '/shoppingsessions', to: 'shoppingsessions#create'
   post '/addproduct', to: 'shoppinglists#create'
+  get '/productslist', to: 'shoppingsessions#get_list_of_products'
 end
