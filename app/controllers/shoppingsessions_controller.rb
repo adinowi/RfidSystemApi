@@ -10,9 +10,10 @@ class ShoppingsessionsController < ApplicationController
 
     def get_list_of_products
         tag_ids = @shoppingsession.shoppinglists.where(removed: false).map(&:tag_id).flatten
+        @tags = Tag.where(id: tag_ids)
         @products = []
-        tag_ids.each do |tag_id|
-            @products << Product.where(id: tag_id).first
+        @tags.each do |tag|
+            @products << Product.where(id: tag.product_id).first
         end
         render :shoppinglists, status: :ok
     end
