@@ -13,7 +13,9 @@ class ShoppingsessionsController < ApplicationController
         @tags = Tag.where(id: tag_ids)
         @products = []
         @tags.each do |tag|
-            @products << Product.where(id: tag.product_id).first
+            product = Product.where(id: tag.product_id).first
+            product.id = tag.id
+            @products << product
         end
         render :shoppinglists, status: :ok
     end
