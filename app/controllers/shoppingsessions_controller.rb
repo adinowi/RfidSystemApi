@@ -1,5 +1,6 @@
 class ShoppingsessionsController < ApplicationController
     before_action :authenticate_user!
+    before_action :active_session, only: [:get_list_of_products, :paid]
     rescue_from ActionController::ParameterMissing, with: :missing_params
     
     def create
@@ -8,16 +9,24 @@ class ShoppingsessionsController < ApplicationController
     end
 
     def get_list_of_products
-        @shoppingsessions = Shoppingsession.where(user_id: current_user.id, active: true)
-        if @shoppingsessions.any?()
-            shoppingsession = @shoppingsessions.order(updated_at: :desc).first
-            tag_ids = shoppingsession.shoppinglists.map(&:tag_id).flatten
-            @products = []
-            tag_ids.each do |tag_id|
-                @products << Product.where(id: tag_id).first
-            end
-            render :shoppinglists, status: :ok
+        tag_ids = @shoppingsession.shoppinglists.map(&:tag_id).flatten
+        @products = []
+        tag_ids.each do |tag_id|
+            @products << Product.where(id: tag_id).first
         end
+        render :shoppinglists, status: :ok
+    end
+
+    def paid
+        tag_ids = @shoppingsession.shoppinglists.map(&:tag_id).flatten
+        tags = Tag.where(id: tag_ids)
+        tags.each do |tag|
+            tag.paid = true
+            tag.save
+        end
+        @shoppingsession.active = false
+        @shoppingsession.save
+        render json: {message: 'Paid'}, status: :ok
     end
     
     private 
@@ -29,5 +38,12 @@ class ShoppingsessionsController < ApplicationController
 
     def missing_params
         render json: {error: "Paramter is missing"}, status: :bad_request
+    end
+
+    def active_session
+        @shoppingsessions = Shoppingsession.where(user_id: current_user.id, active: true)
+        if @shoppingsessions.any?()
+            @shoppingsession = @shoppingsessions.order(updated_at: :desc).first
+        end
     end
 end
