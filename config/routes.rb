@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   get '/productslist', to: 'shoppingsessions#get_list_of_products'
   get '/pay', to: 'shoppingsessions#paid'
   delete '/removeproduct', to: 'shoppingsessions#remove'
+  post '/checkpaid', to: 'tags#check_paid'
 end
