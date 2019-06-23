@@ -59,6 +59,8 @@ class ShoppingsessionsController < ApplicationController
         @shoppingsessions = Shoppingsession.where(user_id: current_user.id, active: true)
         if @shoppingsessions.any?()
             @shoppingsession = @shoppingsessions.order(updated_at: :desc).first
+        else 
+            return render json: {error: "No active session"}, status: :bad_request
         end
     end
 end
