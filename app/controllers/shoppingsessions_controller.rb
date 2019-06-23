@@ -33,9 +33,9 @@ class ShoppingsessionsController < ApplicationController
     end
 
     def remove
-        shoppinglists = Shoppinglist.where(tag_id: params[:tag_id], shoppingsession_id: @shoppingsession.id)
+        shoppinglists = Shoppinglist.where(tag_id: params[:tag_id], shoppingsession_id: @shoppingsession.id, removed: false)
         if shoppinglists.blank?()
-             render json: {message: 'Unauthorized'}, status: :unauthorized
+             return render json: {message: 'Unauthorized'}, status: :unauthorized
         end
         shoppinglist = shoppinglists.first
         shoppinglist.removed = true
