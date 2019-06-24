@@ -1,6 +1,7 @@
 class ShoppingsessionsController < ApplicationController
     before_action :authenticate_user!
     before_action :active_session, only: [:get_list_of_products, :paid, :remove]
+    before_action :sensor_exists, only: [:create]
     rescue_from ActionController::ParameterMissing, with: :missing_params
     
     def create
@@ -61,6 +62,13 @@ class ShoppingsessionsController < ApplicationController
             @shoppingsession = @shoppingsessions.order(updated_at: :desc).first
         else 
             return render json: {error: "No active session"}, status: :bad_request
+        end
+    end
+
+    def sensor_exists
+        sensors = Sensor.where(id: params[:sensor_id], deleted: false)
+        if sensors.blank?()
+            return render json: {error: "Sensor dosent exist"}, status: :bad_request
         end
     end
 end

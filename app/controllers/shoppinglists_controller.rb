@@ -1,5 +1,5 @@
 class ShoppinglistsController < ApplicationController
-    before_action :check_shoppinglist_params, :active_session, :tag_exists, :tag_added
+    before_action :check_shoppinglist_params,:sensor_exists , :active_session, :tag_exists, :tag_added
     def create
         @shoppingsession.shoppinglists.create(tag_id: params[:tag_id], removed: false)
         render json: {message: 'Product added' },  status: :ok    
@@ -33,6 +33,13 @@ class ShoppinglistsController < ApplicationController
         tags = @shoppingsession.shoppinglists.where(tag_id: params[:tag_id], removed: false) 
         if tags.any?()
             return render json: {message: "Tag is added"}, status: :bad_request
+        end
+    end
+
+    def sensor_exists
+        sensors = Sensor.where(id: params[:sensor_id], deleted: false)
+        if sensors.blank?()
+            return render json: {error: "Sensor dosent exist"}, status: :bad_request
         end
     end
 end
