@@ -56,10 +56,12 @@ ActiveRecord::Schema.define(version: 2019_06_21_175906) do
 
   create_table "tags", force: :cascade do |t|
     t.bigint "product_id"
+    t.string "uuid"
     t.boolean "paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_tags_on_product_id"
+    t.index ["uuid"], name: "index_tags_on_uuid", unique: true
   end
 
   create_table "users", force: :cascade do |t|
