@@ -18,4 +18,14 @@ class TagsController < ApplicationController
             render json: {message: 'Tag is not paid'}, status: :not_acceptable
         end
     end
+
+    def reset_paid
+        tags = Tag.all
+        tags.each do |tag|
+            tag.paid = false
+            tag.save
+        end
+
+        render json: {message: 'Reset is done'}, status: :ok
+    end
 end

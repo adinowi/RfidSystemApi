@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   delete '/removeproduct', to: 'shoppingsessions#remove'
   post '/checkpaid', to: 'tags#check_paid'
   post '/checktagpaid', to: 'tags#check_tag_paid'
+  get '/reset', to: 'tags#reset_paid'
 end
